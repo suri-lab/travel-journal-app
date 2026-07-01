@@ -19,7 +19,6 @@ cors_origins = [
     for origin in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
     if origin.strip()
 ]
-print(f"[startup] CORS allowed origins: {cors_origins!r}")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
@@ -35,8 +34,3 @@ app.include_router(photos.router)
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
-
-@app.get("/debug/cors")
-def debug_cors():
-    return {"raw_env": os.getenv("CORS_ORIGINS"), "parsed": cors_origins}
