@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: travel-journal-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: UNSPLASH_ACCESS_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite:///./travel_journal.db
+      - key: CORS_ORIGINS
+        sync: false
