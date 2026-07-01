@@ -14,7 +14,12 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Travel Journal API", version="1.0")
 
-cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+    if origin.strip()
+]
+print(f"[startup] CORS allowed origins: {cors_origins!r}")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
